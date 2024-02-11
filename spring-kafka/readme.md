@@ -22,4 +22,42 @@ a. Rule을 정해 패턴화하여 의미를 부여
 
 
 
+컨텍스트 초기화할 때 생성
+```java
+@Bean
+public NewTopic clip2() {
+    return TopicBuilder.name("clip2").build();
+}
+
+@Bean
+public KafkaAdmin.NewTopics clip2s() {
+        return new KafkaAdmin.NewTopics(
+        TopicBuilder.name("clip2-part1").build(),
+        TopicBuilder.name("clip2-part2")
+        .partitions(3)
+        .replicas(1)
+        .config(TopicConfig.RETENTION_MS_CONFIG, String.valueOf(1000 * 60 * 60))
+        .build()
+    );
+}
+
+
+@Bean
+public ApplicationRunner runner(AdminClient adminClient) {
+    return args -> {
+        Map<String, TopicListing> topics = adminClient.listTopics().namesToListings().get();
+    
+        for (String topicName : topics.keySet()) {
+        TopicListing topicListing = topics.get(topicName);
+        System.out.println(topicListing);
+    
+        Map<String, TopicDescription> description = adminClient.describeTopics(Collections.singleton(topicName)).allTopicNames().get();
+    
+        System.out.println(description);
+    
+        adminClient.deleteTopics(Collections.singleton(topicName));
+        }
+    };
+}
+```
 
