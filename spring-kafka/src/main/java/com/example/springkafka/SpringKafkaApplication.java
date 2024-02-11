@@ -1,19 +1,11 @@
 package com.example.springkafka;
 
 import com.example.springkafka.producer.ClipProducer;
-import org.apache.kafka.clients.admin.AdminClient;
-import org.apache.kafka.clients.admin.TopicDescription;
-import org.apache.kafka.clients.admin.TopicListing;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.kafka.core.KafkaTemplate;
-
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Map;
+import org.springframework.kafka.listener.KafkaMessageListenerContainer;
 
 @SpringBootApplication
 public class SpringKafkaApplication {
@@ -23,10 +15,13 @@ public class SpringKafkaApplication {
     }
 
     @Bean
-    public ApplicationRunner runner(ClipProducer clipProducer) {
+    public ApplicationRunner runner(
+            ClipProducer clipProducer, KafkaMessageListenerContainer<String, String> kafkaMessageListenerContainer
+    ) {
         return args -> {
-            clipProducer.async("clip3", "hello, async");
-            clipProducer.sync("clip3", "hello, sync");
+            kafkaMessageListenerContainer.start();
+
+            clipProducer.async("clip4", "hello, clip4 container");
             Thread.sleep(3000);
         };
     }
