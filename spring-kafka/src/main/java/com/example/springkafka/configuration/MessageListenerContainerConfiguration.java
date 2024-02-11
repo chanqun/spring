@@ -1,6 +1,6 @@
 package com.example.springkafka.configuration;
 
-import com.example.springkafka.consumer.DefaultMessageListener;
+import com.example.springkafka.consumer.listener.DefaultMessageListener;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.context.annotation.Bean;

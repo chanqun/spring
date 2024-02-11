@@ -132,7 +132,16 @@ LocalValidatorFactoryBean도 사용가능
 ### Retry Stateful
 
 
+kafka 정보
 
-
+```java
+@KafkaListener(id = "clip4-listener-id", topics = "clip4-listener")
+public void listen(
+        String message, 
+        @Header(KafkaHeaders.RECEIVED_TIMESTAMP) long timestamp,
+        ConsumerRecordMetadata metadata
+) {
+    System.out.println("listener listen " + message + " metadata : " + metadata.offset());
+}
+```
  
-
