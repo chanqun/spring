@@ -145,3 +145,18 @@ public void listen(
 }
 ```
  
+
+
+## Error Handling
+- Retry Delivery
+  - RetryTemplate, RecoveryCallback
+- ErrorHandler
+  - DeadLetterPublishingRecoverer (ConsumerAwareRecordRecoverer -> default 재전송함)
+
+
+## Kafka Streams
+a. StreamBuilder
+b. Ktable
+c. Branch
+
+![img.png](img.png)
