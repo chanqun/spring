@@ -160,3 +160,33 @@ b. Ktable
 c. Branch
 
 ![img.png](img.png)
+
+
+EDM + Kafka
+ 
+ 쇼핑몰
+ 주문 재고 결제
+ 
+ Inventory topic, payment topic, order topic
+ 
+ 
+ 핸들링하는 데이터 특성에 맞게 db를 세팅
+ Polyglot Persistence
+ 
+ EDM -> transactional 처리 고민!!
+ 
+ MSA에 각 서비스는 로컬 트랜잭션만 가능
+ SAGA 패턴은 local transaction 완료하면 트리거 될 수 있도록 이벤트를
+ 이벤트 채널에 퍼블리시한다.
+ 중간에 실패하면 트랜잭션 실패 이벤트를 publish해서 역순으로 롤백
+ 
+ choreography, orchestration
+ 
+ 
+ transaction_id order inventory payment로 넘어 다님
+ 
+ 
+ ORDER_CREATED -> inventory reserved
+ ORDER_CANCEL -> inventory rollback
+
+
