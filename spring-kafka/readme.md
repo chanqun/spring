@@ -190,3 +190,27 @@ EDM + Kafka
  ORDER_CANCEL -> inventory rollback
 
 
+## UseCase에 기반한 kafka 서비스 요구사항 정의
+
+1. 가용성
+2. 성능 용량
+   - 200 Ops/sec 초당 100개 구매 이력 발생, 200Byte가 60초 200개 발생. 200Byte * 2repl * 1440분 * 5일 * 200개 = 34.5Gb + buffer 5Gb
+
+프로모션 노출 로직 실시간 변경 서비스 - 실시간 프로모션 구매 포션 확인 서비스
+
+- 이력을 넘겨주는 방식 -> API, LogFile, Kafka
+- 노출되지 않아야 할 개인 정보
+- 저장공간의 문제 발생 시 서비스에서 보장해야 하는 데이터 보관기간
+- 실시간 구매로그가 추후 다른 곳에 쓰일 수 있는가?
+
+Topology, Kafka Stream
+
+Kafka에서 Topology란 : 프로세스와 토픽등이 연결된 모습, 메시지의 흐름 + 기본적 처리 내
+
+![img_1.png](img_1.png)
+
+
+Zookeeper: cluster 및 하위요소에 대한 전반적인 메타정보, Controller 정보, 선출, Broker 정보
+Brokder: 실제 data를 받아 저장하고 있음
+Controller: broker 대장
+
