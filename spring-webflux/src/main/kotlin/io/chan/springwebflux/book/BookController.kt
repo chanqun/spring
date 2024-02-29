@@ -16,8 +16,7 @@ class BookController(
     private val bookService: BookService
 ) {
 
-
-    @GetMapping("/books")
+    @GetMapping
     fun getAll(): Flux<Book> {
         return bookService.getAll()
     }
