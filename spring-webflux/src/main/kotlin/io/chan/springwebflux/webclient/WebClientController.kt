@@ -1,6 +1,7 @@
 package io.chan.springwebflux.webclient
 
 import io.chan.springwebflux.book.Book
+import kotlinx.coroutines.runBlocking
 import org.slf4j.LoggerFactory
 import org.springframework.core.ParameterizedTypeReference
 import org.springframework.http.HttpMethod

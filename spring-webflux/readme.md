@@ -40,3 +40,16 @@ Publisher 인터페이스를 구현하는 Mono와 Flux
 
 Mono.fromCallable {}.subscribeOn(Schedulers.boundedElastic()) 사용
 
+
+### coroutine
+
+suspend
+runBlocking
+launch
+
+
+flow
+flow 는 emit, collect 를 이용할 수 있음
+
+
+
