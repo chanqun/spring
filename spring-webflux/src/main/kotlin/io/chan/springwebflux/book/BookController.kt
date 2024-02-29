@@ -5,12 +5,13 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
-import java.util.concurrent.atomic.AtomicInteger
 
 @RestController
+@RequestMapping("/books")
 class BookController(
     private val bookService: BookService
 ) {
@@ -21,18 +22,13 @@ class BookController(
         return bookService.getAll()
     }
 
-    @GetMapping("/books/{id}")
-    fun get(@PathVariable id: Int): Mono<Book> {
-        return bookService.get(id)
+    @GetMapping("/{name}")
+    fun getByName(@PathVariable name: String): Mono<Book> {
+        return bookService.getByName(name)
     }
 
-    @PostMapping("/books")
-    fun add(@RequestBody req: Map<String, Any>): Mono<Book> {
-        return bookService.add(req)
-    }
-
-    @DeleteMapping("/books/{id}")
-    fun delete(@PathVariable id: Int): Mono<Void> {
-        return bookService.delete(id)
+    @PostMapping
+    fun create(@RequestBody map: Map<String, Any>): Mono<Book> {
+        return bookService.create(map)
     }
 }

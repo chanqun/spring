@@ -7,40 +7,20 @@ import reactor.kotlin.core.publisher.toFlux
 import java.util.concurrent.atomic.AtomicInteger
 
 @Service
-class BookService {
-    private final val nextId = AtomicInteger(0)
-
+class BookService(
+    private val bookRepository: BookRepository
+) {
     fun getAll(): Flux<Book> {
-        return books.toFlux()
+        return bookRepository.findAll()
     }
 
-    fun get(id: Int): Mono<Book> {
-        return Mono.justOrEmpty(books.find { it.id == id })
+    fun getByName(name:String): Mono<Book> {
+        return bookRepository.findByName(name)
     }
 
-    fun add(req: Map<String, Any>): Mono<Book> {
-        return Mono.just(req)
-            .map { map ->
-                val book = Book(
-                    id = nextId.incrementAndGet(),
-                    name = map["name"].toString(),
-                    price = map["price"].toString().toInt()
-                )
+    fun create(map: Map<String, Any>): Mono<Book> {
+        val book = Book(name = map["name"].toString(), price = map["price"].toString().toInt())
 
-                books.add(book)
-
-                book
-            }
+        return bookRepository.save(book)
     }
-
-    fun delete(id: Int): Mono<Void> {
-        return Mono.justOrEmpty(books.find {it.id == id})
-            .map { books.remove(it) }
-            .then()
-    }
-
-    val books = mutableListOf(
-        Book(id = nextId.incrementAndGet(), name = "코틀린 인 액션", price = 30000),
-        Book(id = nextId.incrementAndGet(), name = "HTTP 완벽 가이드", price = 40000)
-    )
 }
