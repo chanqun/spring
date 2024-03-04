@@ -1,8 +1,12 @@
-DROP TABLE IF EXISTS book;
+DROP TABLE IF EXISTS users;
 
-create table book(
+create table users(
     id bigint not null auto_increment,
-    name varchar(50),
-    price int,
+    email varchar(100),
+    username varchar(50),
+    password varchar(500),
+    profile_url varchar(500),
+    created_at timestamp default now(),
+    updated_at timestamp default now(),
     primary key (id)
 );
